@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+      <title>{{ site.name }}</title>
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      {% stylesheet main %}
+      {% stylesheet syntax %}
+
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-md-4 blog-sidebar">
+          <a href="/"><img src="https://s.gravatar.com/avatar/c665d5c046eb8dc2c14c22e2f65463af?s=150" alt="Ian Unruh" class="me"></a>
+
+          <p><a href="/" class="blog-title">{{ site.name }}</a></p>
+
+          <p>Researcher, software engineer, cryptocurrency enthusiast, libertarian</p>
+
+          <div class="list-group">
+            <a class="list-group-item" href="https://github.com/ianunruh">
+              <img src="/images/github-24.png" alt="GitHub" class="si si-github">
+              GitHub
+            </a>
+            <a class="list-group-item" href="http://last.fm/user/sobenofear">
+              <img src="/images/lastfm-24.png" alt="Last.fm" class="si si-lastfm">
+              Last.fm
+            </a>
+            <a class="list-group-item" href="https://twitter.com/ianunruh">
+              <img src="/images/twitter-24.png" alt="Twitter" class="si si-twitter">
+              Twitter
+            </a>
+            <a class="list-group-item" href="https://foursquare.com/ianunruh">
+              <img src="/images/foursquare-24.png" alt="Foursquare" class="si si-foursquare">
+              Foursquare
+            </a>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          {{ content }}
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>
+          &copy; <a href="https://github.com/ianunruh">Ian Unruh</a>
+          &mdash; Powered by <a href="http://jekyllrb.com">Jekyll</a>
+          &mdash; Hosted on <a href="https://www.digitalocean.com/?refcode=ddac7aa191d7">DigitalOcean</a>
+        </p>
+      </div>
+
+
+    </div>
+
+  </body>
+</html>

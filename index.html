@@ -1,0 +1,23 @@
+---
+layout: default
+---
+
+<div>
+
+  <h3>Latest Posts</h3>
+
+  {% for post in site.posts %}
+  <p>
+    <a href="{{ post.url }}" class="post-title">{{ post.title }}</a>&nbsp;
+    <span class="time">{{ post.date | date_to_string }}</span>
+  </p>
+  {% endfor %}
+
+  <h3>Quotes</h3>
+
+  <blockquote>
+    <p>There are only two hard things in Computer Science: cache invalidation and naming things.</p>
+    <footer>Phil Karlton</footer>
+  </blockquote>
+
+</div>

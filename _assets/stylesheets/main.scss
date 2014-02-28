@@ -1,0 +1,63 @@
+@import url(http://fonts.googleapis.com/css?family=Telex);
+
+$brand-primary: #03899C;
+$headings-font-family: "Telex", sans-serif;
+
+@import "bootstrap";
+
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.time {
+  color: #adadad;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.blog-sidebar {
+  text-align: center;
+}
+
+.blog-sidebar img.me {
+  border-radius: 50%;
+  @include center-block;
+}
+
+.blog-sidebar p {
+  margin: 1em 0;
+}
+
+.blog-title {
+  font-family: $headings-font-family;
+  font-size: $font-size-h1;
+}
+
+.blog-sidebar .list-group-item {
+  line-height: 24px;
+}
+
+.post-title {
+  font-size: $font-size-h4;
+}
+
+// simpleicons.org
+img.si {
+  border-radius: 50%;
+  position: absolute;
+  left: 15px;
+}
+
+img.si-foursquare {
+  background-color: #2398c9;
+}
+img.si-github {
+  background-color: #4183c4;
+}
+img.si-twitter {
+  background-color: #00aced;
+}
+img.si-lastfm {
+  background-color: #d51007;
+}
