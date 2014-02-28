@@ -15,39 +15,24 @@
   </head>
   <body>
 
-    <div class="container">
+    <div id="main" class="container">
 
       <div class="row">
 
         <div class="col-md-4 blog-sidebar">
+
           <a href="/"><img src="https://s.gravatar.com/avatar/c665d5c046eb8dc2c14c22e2f65463af?s=150" alt="Ian Unruh" class="me"></a>
 
           <p><a href="/" class="blog-title">{{ site.name }}</a></p>
 
+          <ul class="list-inline links">
+          {% for l in site.links %}
+            <li><a href="{{ l.url }}"><img src="/images/{{ l.image }}-32.png" alt="{{ l.title }}" title="{{ l.title }}" class="si-{{ l.image }}"></a></li>
+          {% endfor %}
+          </ul>
+
           <p>Researcher, software engineer, cryptocurrency enthusiast, libertarian</p>
 
-          <div class="list-group">
-            <a class="list-group-item" href="https://github.com/ianunruh">
-              <img src="/images/github-24.png" alt="GitHub" class="si si-github">
-              GitHub
-            </a>
-            <a class="list-group-item" href="http://last.fm/user/sobenofear">
-              <img src="/images/lastfm-24.png" alt="Last.fm" class="si si-lastfm">
-              Last.fm
-            </a>
-            <a class="list-group-item" href="https://twitter.com/ianunruh">
-              <img src="/images/twitter-24.png" alt="Twitter" class="si si-twitter">
-              Twitter
-            </a>
-            <a class="list-group-item" href="http://www.linkedin.com/in/ianunruh">
-              <img src="/images/linkedin-24.png" alt="LinkedIn" class="si si-linkedin">
-              LinkedIn
-            </a>
-            <a class="list-group-item" href="https://foursquare.com/ianunruh">
-              <img src="/images/foursquare-24.png" alt="Foursquare" class="si si-foursquare">
-              Foursquare
-            </a>
-          </div>
         </div>
 
         <div class="col-md-8">

@@ -4,29 +4,24 @@ $brand-primary: #03899C;
 $headings-font-family: "Telex", sans-serif;
 
 @import "bootstrap";
+@import "bootstrap/theme";
 
-body {
+div#main {
   padding-top: 40px;
   padding-bottom: 40px;
-}
-
-.time {
-  color: #adadad;
-  margin-bottom: 10px;
-  font-size: 12px;
 }
 
 .blog-sidebar {
   text-align: center;
 }
 
-.blog-sidebar img.me {
-  border-radius: 50%;
-  @include center-block;
-}
-
 .blog-sidebar p {
   margin: 1em 0;
+}
+
+.blog-sidebar .me {
+  border-radius: 50%;
+  @include center-block;
 }
 
 .blog-title {
@@ -34,21 +29,15 @@ body {
   font-size: $font-size-h1;
 }
 
-.blog-sidebar .list-group-item {
-  line-height: 24px;
+.links {
+  margin: 1em 0;
 }
 
-.post-title {
-  font-size: $font-size-h4;
-}
-
-// simpleicons.org
-img.si {
+.links img {
   border-radius: 50%;
-  position: absolute;
-  left: 15px;
 }
 
+// colors from simpleicons.org
 img.si-foursquare {
   background-color: #2398c9;
 }
@@ -63,4 +52,14 @@ img.si-lastfm {
 }
 img.si-linkedin {
   background-color: #007fb1;
+}
+
+.post-title {
+  font-size: $font-size-h4;
+}
+
+.time {
+  color: #adadad;
+  margin-bottom: 10px;
+  font-size: 12px;
 }
