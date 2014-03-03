@@ -97,8 +97,7 @@ This preserves the old base stack pointer `ebp`, then changes the basic stack po
 andl   $-16, %esp
 ```
 
-Basically this tries to align the stack pointer so that the address is a multiple of 16. This alignment can optimize
-certain x86 instructions, but isn't terrible important here.
+Basically this tries to align the stack pointer so that the address is a multiple of 16. This alignment can optimize certain x86 instructions, but isn't terrible important here.
 
 ```asm
 subl   $32, %esp
@@ -166,9 +165,7 @@ These instructions encompass everything that happens in this line of C
 x = a1 * a2 + a3 * a4 + a5 * a6 + a7;
 ```
 
-Note that we start at `24(%esp)`, which is at address `fc0`. The 24-byte offset is because of the fact
-that we pushed the 4-byte return address on the stack, as well as 20 bytes for the local variable stack. For some
-reason, the compiler decided we needed 20 bytes, even though we actually only use 4 bytes.
+Note that we start at `24(%esp)`, which is at address `fc0`. The 24-byte offset is because of the fact that we pushed the 4-byte return address on the stack, as well as 20 bytes for the local variable stack. For some reason, the compiler decided we needed 20 bytes, even though we actually only use 4 bytes.
 
 At this point, the stack is still the same, but the registers look like this:
 
@@ -179,24 +176,21 @@ At this point, the stack is still the same, but the registers look like this:
 | eax      | 66    |
 | edx      | 30    |
 
-The value in `eax` holds the answer of the calculations. The value in `edx` is now garbage, it was used in 
-intermediary calculations.
+The value in `eax` holds the answer of the calculations. The value in `edx` is now garbage, it was used in intermediary calculations.
 
 ```asm
 movl   %eax, 16(%esp)
 movl   16(%esp), %eax
 ```
 
-Copies the value of `eax` into `16(%esp)`. I'm not sure why this happens at all. The rest of the program
-never reads from this address.
+Copies the value of `eax` into `16(%esp)`. I'm not sure why this happens at all. The rest of the program never reads from this address.
 
 ```asm
 movl   %eax, (%esp)
 call   bar
 ```
 
-I'm also not sure why the compiler decided to use the stack to pass the sole argument into `bar` instead of
-using `eax`. Regardless, the stack and registers look something like this:
+I'm also not sure why the compiler decided to use the stack to pass the sole argument into `bar` instead of using `eax`. Regardless, the stack and registers look something like this:
 
 | Address | Value |
 |---------|-------|
@@ -224,8 +218,7 @@ using `eax`. Regardless, the stack and registers look something like this:
 | esp      | fa4   |
 | eax      | 66    |
 
-Here we copy the value in `eax` to the address specified by the stack pointer `esp`, then call the `bar` procedure. 
-Just like when `foo` is called from `main`, the return address is stored in `esp` and `esp` is decremented.
+Here we copy the value in `eax` to the address specified by the stack pointer `esp`, then call the `bar` procedure.  Just like when `foo` is called from `main`, the return address is stored in `esp` and `esp` is decremented.
 
 ```asm
 movl   4(%esp), %eax
@@ -267,29 +260,25 @@ Restores the stack pointer and base stack pointer and exits the `main` procedure
 
 ### Side-effects
 
-Out of all the things to analyze in this program, the hardest part for me was the side-effects of different instructions.
-While a lot of assembly references are great at describing the arguments of instructions and the effects on the instructions,
-they weren't very good at describing side-effects.
+Out of all the things to analyze in this program, the hardest part for me was the side-effects of different instructions. While a lot of assembly references are great at describing the arguments of instructions and the effects on the instructions, they weren't very good at describing side-effects.
 
 For example, `pushl SOURCE` roughly translates to this assembly.
 
 ```asm
+subl   $4, %esp
 movl   SOURCE, %esp
-addl   $4, %esp
 ```
 
-The `popl DEST` instruction is similar.
+The `popl DEST` instruction is similar, but in reverse.
 
 ```asm
-subl   $4, %esp
 movl   %esp, DEST
+addl   $4, %esp
 ```
 
 Armed with these two basic building blocks, we can break down other instructions.
 
-The `call` procedure is straightforward. First, the return address is pushed onto the stack. Next, the program jumps
-to the address of the procedure being called. Once the subprocedure is finished, it calls `ret`, which pops the return
-address and then jumps to that address.
+The `call` procedure is straightforward. First, the return address is pushed onto the stack. Next, the program jumps to the address of the procedure being called. Once the subprocedure is finished, it calls `ret`, which pops the return address and then jumps to that address.
 
 The `leave` procedure is a bit more interesting, it looks something like this assembly code.
 
@@ -298,16 +287,13 @@ movl   %ebp, %esp
 popl   %ebp
 ```
 
-This effectively deallocates all of the space on the stack that we reserved. After that, it restores the old base
-stack pointer.
+This effectively deallocates all of the space on the stack that we reserved. After that, it restores the old base stack pointer.
 
 ### What's Next
 
-I plan to cover the assembly compiled for the x86-64 architecture. It is much more simple than the x86 version, due to the
-fact that more registers are available on x86-64. This means that the number of operations performed on the stack are less.
+I plan to cover the assembly compiled for the x86-64 architecture. It is much more simple than the x86 version, due to the fact that more registers are available on x86-64. This means that the number of operations performed on the stack are less.
 
-If any glaring errors are present in this post, feel free to submit an issue or pull request on this site's 
-[GitHub repository](https://github.com/ianunruh/ianunruh-jekyll/issues).
+If any glaring errors are present in this post, feel free to submit an issue or pull request on this site's  [GitHub repository](https://github.com/ianunruh/ianunruh-jekyll/issues).
 
 ### Resources
 
