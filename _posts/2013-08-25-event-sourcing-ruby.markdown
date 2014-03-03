@@ -17,7 +17,8 @@ For an example, I'll model an inventory item using event sourcing. Efficient inv
 We allow the quantity to underflow, in the case that a removal of inventory is reported before a check-in of inventory.
 
 The API for our aggregate is as follows:
-{% highlight ruby %}
+
+```ruby
 class InventoryItem
   def initialize(id, name)
   end
@@ -31,16 +32,16 @@ class InventoryItem
   def remove(quantity)
   end
 end
-{% endhighlight %}
+```
 
 The possible events are:
 
-{% highlight ruby %}
+```ruby
 ItemCreated = Struct.new :id, :name
 ItemsCheckedIn = Struct.new :id, :quantity
 ItemsRemoved = Struct.new :id, :quantity
 ItemDeactivated = Struct.new :id
-{% endhighlight %}
+```
 
 The events are modeled using plain-old Ruby objects (POROs). Each event must capture enough information to be able to rebuild the aggregate to its current state.
 
@@ -53,7 +54,7 @@ Different scenarios are possible for describing how an aggregate is brought into
 
 When snapshotting is involved, other scenarios are possible. For now, however, I'll just focus on the two I mentioned.
 
-{% highlight ruby %}
+```ruby
 class AggregateRoot
   attr_reader :id
 
@@ -103,13 +104,13 @@ class AggregateRoot
     @version = version.next
   end
 end
-{% endhighlight %}
+```
 
 When the aggregate is first instantiated, it starts at version 0. Each additional event causes the version to increment. If the aggregate is being restored from an event stream, events from the stream are not added to the changes list.
 
 To enable the constructor to be used for domain purposes, we use lazy initialization on the `changes` and `version` fields. To finish implementing this base class, we also need to be able to clear the changes once the aggregate is committed, and be able to do some additional introspection on the aggregate:
 
-{% highlight ruby %}
+```ruby
 class AggregateRoot
   def clear_changes
     @changes.clear if @changes
@@ -123,13 +124,13 @@ class AggregateRoot
     version - changes.size
   end
 end
-{% endhighlight %}
+```
 
 # Inventory item aggregate
 
 Now, to implement the aggregate for an inventory item, it looks something like this:
 
-{% highlight ruby %}
+```ruby
 class InventoryItem < AggregateRoot
   def initialize(id, name)
     apply(ItemCreated.new(id, name))
@@ -175,23 +176,23 @@ class InventoryItem < AggregateRoot
     end
   end
 end
-{% endhighlight %}
+```
 
 This implementation completely encapsulates the state of the aggregate, only exposing it in the form of domain events. The case statement that is used to mutate the state of the aggregate could be refactored into convention-based or registration-based routing for better looking code. Also notice that the public methods don't actually mutate the state of the aggregate. The state is mutated based solely on the events applied to the aggregate. The separation of duties forces the developer to model events correctly.
 
 Interacting with the aggregate would happen like so:
 
-{% highlight ruby %}
+```ruby
 item = InventoryItem.new '4b102909-401f-4605-8e67-edb0b8def603', 'Awesomesauce'
 item.check_in 100
 
 item.initial_version # => 0
 item.version # => 2
-{% endhighlight %}
+```
 
 Now, I can get a list of events that have been applied to the aggregate and use it to rebuild the aggregate from scratch:
 
-{% highlight ruby %}
+```ruby
 events = item.changes
 
 loaded = InventoryItem.from_history events
@@ -199,7 +200,7 @@ loaded.remove 10
 
 item.initial_version # => 2
 item.version # => 3
-{% endhighlight %}
+```
 
 After operations have been performed on the aggregate (usually in the scope of a command, when referring to CQRS), the changes applied to the aggregate are appended to the event store for the aggregate. Afterwards, they are published to an event bus. Listeners for these events could be used to build various read models, trigger alerts on low inventory, etc.
 

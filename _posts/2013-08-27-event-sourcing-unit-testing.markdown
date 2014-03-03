@@ -8,7 +8,7 @@ When using event sourcing with techniques from domain-driven design, one of the 
 
 Using the example presented in my previous post about event sourcing, I wrote a simple spec for testing:
 
-{% highlight ruby %}
+```ruby
 describe InventoryItem do
   it 'allows quantity changes after being reactivated' do
     history = [
@@ -25,13 +25,13 @@ describe InventoryItem do
     ]
   end
 end
-{% endhighlight %}
+```
 
 This pattern is repeated in any tests involved an event-source aggregate.
 
 When testing if operations properly implement business logic, you can ensure that no side-effects have occurred to your aggregate. This is demonstrated in the next example.
 
-{% highlight ruby %}
+```ruby
 describe InventoryItem do
   it 'does not allow quantity changes when deactivated' do
     history = [
@@ -48,11 +48,11 @@ describe InventoryItem do
     item.changes.should == []
   end
 end
-{% endhighlight %}
+```
 
 When testing idempotent operations, you can also ensure no side-effects occur.
 
-{% highlight ruby %}
+```ruby
 describe InventoryItem do
   it 'supports idempotent deactivation' do
     history = [
@@ -66,7 +66,7 @@ describe InventoryItem do
     item.changes.should == []
   end
 end
-{% endhighlight %}
+```
 
 You can also test the creation of a new aggregate using the standard constructor, as well as the changes in aggregate state (if you wish to expose those attributes), and the changes in aggregate version.
 
