@@ -2,7 +2,7 @@
 layout: post
 title: "Event Sourcing in Ruby"
 date: 2013-08-25 17:37:00
-categories: ruby
+comments: true
 ---
 
 An excellent starting place for event sourcing is described at the [Event Sourcing Basics](https://github.com/eventstore/eventstore/wiki/Event-Sourcing-Basics) page on the EventStore wiki. What I'd like to do is start at the beginning and try to figure out a simple model for event sourcing in Ruby.

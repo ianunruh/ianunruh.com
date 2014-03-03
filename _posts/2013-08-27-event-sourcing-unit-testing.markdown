@@ -2,7 +2,7 @@
 layout: post
 title: "Event Sourcing &amp; Unit Testing"
 date: 2013-08-27 22:29:00
-categories: ruby
+comments: true
 ---
 When using event sourcing with techniques from domain-driven design, one of the great benefits you get is ease of unit testing. Since Ruby revolves around TDD, this small benefit goes pretty far.
 

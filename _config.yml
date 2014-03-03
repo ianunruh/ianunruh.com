@@ -4,6 +4,8 @@ redcarpet:
   extensions:
     - tables
 name: Ian Unruh
+disqus_shortname: ianunruh
+permalink: /:year/:month/:title.html
 exclude:
   - Gemfile*
 links:

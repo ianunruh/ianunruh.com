@@ -2,7 +2,7 @@
 layout: post
 title: "Crash Course in Assembly"
 date: 2014-03-02 21:04:00
-categories: assembly
+comments: true
 ---
 
 This post is based off of my experience from CIS 450, taught at K-State. We are learning assembly in the format used by the [GNU Assembler](http://en.wikipedia.org/wiki/GNU_Assembler) on both x86 and x86-64 architectures. My understanding is very limited at this point, so expect the post to evolve as the semester goes on.
