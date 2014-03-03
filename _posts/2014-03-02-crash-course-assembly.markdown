@@ -281,8 +281,8 @@ addl   $4, %esp
 The `popl DEST` instruction is similar.
 
 ```asm
-movl   %esp, DEST
 subl   $4, %esp
+movl   %esp, DEST
 ```
 
 Armed with these two basic building blocks, we can break down other instructions.
