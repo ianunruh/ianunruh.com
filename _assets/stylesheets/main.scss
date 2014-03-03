@@ -64,3 +64,10 @@ img.si-linkedin {
   margin-bottom: 10px;
   font-size: 12px;
 }
+
+table {
+  @extend .table;
+  @extend .table-bordered;
+  @extend .table-hover;
+  @extend .table-condensed;
+}
