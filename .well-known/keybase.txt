@@ -1,0 +1,70 @@
+==================================================================
+https://keybase.io/ianunruh
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://ianunruh.com
+  * I am ianunruh (https://keybase.io/ianunruh) on keybase.
+  * I have a public key with fingerprint 1FBD D5AA 1B08 7B07 323C  B0A9 FB39 D5CA 4CBD 3A67
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "1fbdd5aa1b087b07323cb0a9fb39d5ca4cbd3a67",
+            "host": "keybase.io",
+            "key_id": "fb39d5ca4cbd3a67",
+            "uid": "67e963a779085b82a760dfb3af69b200",
+            "username": "ianunruh"
+        },
+        "service": {
+            "hostname": "ianunruh.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1396990441,
+    "expire_in": 157680000,
+    "prev": "0d28962697d3b41f492ca74418a81166e167ad3c2a7a55fda289355bc713630f",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v0.1.5
+Comment: https://keybase.io/crypto
+
+yML7AnicbZF/TBtlGMcLBQIVAmFOnTBltzQ417G7Xu+ud0AcpFN0Vk1hYSha3vvR
+cvy4K9cWhgxEFyQucaPTaTHVZKOIg8HSQWRmgKyYqmFsFhkb2XRTVDLZnEwwgYVs
+b4n+Y3z/efN+n8/3+7xPnq+S1CpNVGv73qZg+OyOqPHRBbeq0ARuNCCszNcjTANS
+KaxdNlGyC4pDESUXwiCYjeV5AgCMRY0Ui1K4HudYFNA2Fqd5ggMGjuVxQFKIDimX
+nREHjGGBU8gSZajBh1Xkofo/vHutQFICTeKAomjUSLBGPaBIlIc0sJE0q0fRCOgU
+FAlUC5AWgeSWFHc50qhDoForclBtWGv9HyKLk6uh16HILpmTq2Cl3OVyMBGjq94R
+IesE1vpPhpUVJR7ODQ21guIUZQlhMEhyLjESiuE0SdOowYDpEGGvQ1QEqxghCIo0
+ovBE2gi1MBLl9Uaa1JM0xeOsAbMZaD0HKOgzAiOGkaSAkRTgcQ5OCQjCxgOI4wTB
+chSGkzhqg/2dQo0kIwwOvwnsMNIp2iXgcisC0hg8WxqjitKo4mKjI5tTaRJS/t2n
+PjFF1ZEWv9nfaraIKY9lPF6lBE5++er8M1rLuSMHuD9X3E+Fieno27s1RcvDH6zM
+36rPSPXqErZkf9x5beCbHEtvbs10L4r5fgtNeSrGBu4uz+x+VAl2yJNn1NtOXxn/
+/Yn+zcXjfZce6GzODo6SecL6UGB237q8wYMVhrrimjYXf23wnGZ1KKEjs1ctTWFI
+x/djG7JfK53Oe711+9WeILDOPR3Y+WPfewdj5+6ZtVd9LZab6+qi+gMvXh8tqo3n
+dGk2Nm5j+4LdvJp5nrAwb2x8kzFv8O9kJmJ8BU1q/0fqpXBB0k3myaW46ph2vO1e
+cE/RywuHmk3XLf7PeqLLl76uc3fLvsOHtI1dD60Oh18SkvYfPxD0xiY7Uw4/N5tU
+2m8aLrNs8Zwibv3sKU+40jLb5h0Jbb140vGwubOk5vlNiYvB5C9OvF32y7vxlb86
+Pr+4f3D6j0/P21Mrjk1IK1t9yXP244XNvflDR3I8A51/nxrTgu8mPxmRNlm77mRX
+6POFyw0Zd93jpuTu/GOc3WpanezeF8Zam456K38aGxqemVv8oSu95JGqMyf8z4Li
++YnLOYy6Kb0o9KExsONozCvv307frr5T6MkEfcGZqe4bBSNl6Ynp23buWl40X1hs
+MVPRPfN7Hgzp+nNzvWntl7QX3kkdOf1WUtauFyr+KqlrnDUmmr5tW38fpIaTeQ==
+=knQ3
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/ianunruh
+
+==================================================================
