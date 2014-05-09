@@ -1,10 +1,28 @@
-@import url(http://fonts.googleapis.com/css?family=Telex);
+@import url(http://fonts.googleapis.com/css?family=Cuprum);
+@import url(http://fonts.googleapis.com/css?family=Inconsolata);
+@import url(http://fonts.googleapis.com/css?family=Roboto);
 
-$brand-primary: #03899C;
-$headings-font-family: "Telex", sans-serif;
+$fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts";
+
+$font-base-size: 16px;
+$headings-font-family: "Cuprum", sans-serif;
+$font-family-monospace: "Inconsolata", monospace;
+$font-family-sans-serif: "Roboto", monospace;
+
+$brand-primary: #218457;
+
+$body-bg: #eaeaea;
+$blockquote-border-color: darken($body-bg, 5%);
+$hr-border: darken($body-bg, 5%);
 
 @import "bootstrap";
-@import "bootstrap/theme";
+// @import "bootstrap/theme";
+
+@import "font-awesome/font-awesome";
+
+pre {
+  word-break: normal;
+}
 
 div#main {
   padding-top: 40px;
@@ -19,40 +37,9 @@ div#main {
   margin: 1em 0;
 }
 
-.blog-sidebar .me {
-  border-radius: 50%;
-  @include center-block;
-}
-
 .blog-title {
   font-family: $headings-font-family;
   font-size: $font-size-h1;
-}
-
-.links {
-  margin: 1em 0;
-}
-
-.links img {
-  padding: 3px;
-  border-radius: 50%;
-}
-
-// colors from simpleicons.org
-img.si-foursquare {
-  background-color: #2398c9;
-}
-img.si-github {
-  background-color: #4183c4;
-}
-img.si-twitter {
-  background-color: #00aced;
-}
-img.si-lastfm {
-  background-color: #d51007;
-}
-img.si-linkedin {
-  background-color: #007fb1;
 }
 
 .post-title {

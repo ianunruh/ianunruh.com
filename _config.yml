@@ -8,19 +8,3 @@ disqus_shortname: ianunruh
 permalink: /:year/:month/:title.html
 exclude:
   - Gemfile*
-links:
-  - title: GitHub
-    image: github
-    url: "https://github.com/ianunruh"
-  - title: Last.fm
-    image: lastfm
-    url: "http://last.fm/user/sobenofear"
-  - title: Foursquare
-    image: foursquare
-    url: "https://foursquare.com/ianunruh"
-  - title: LinkedIn
-    image: linkedin
-    url: "http://www.linkedin.com/in/ianunruh"
-  - title: Twitter
-    image: twitter
-    url: "https://twitter.com/ianunruh"

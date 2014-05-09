@@ -21,17 +21,19 @@
 
         <div class="col-md-4 blog-sidebar">
 
-          <a href="/"><img src="https://s.gravatar.com/avatar/c665d5c046eb8dc2c14c22e2f65463af?s=150" alt="Ian Unruh" class="me"></a>
+          <a href="/"><img src="https://s.gravatar.com/avatar/c665d5c046eb8dc2c14c22e2f65463af?s=150" alt="Ian Unruh" class="img-rounded"></a>
 
           <p><a href="/" class="blog-title">{{ site.name }}</a></p>
 
-          <ul class="list-inline links">
-          {% for l in site.links %}
-            <li><a href="{{ l.url }}"><img src="/images/{{ l.image }}-32.png" alt="{{ l.title }}" title="{{ l.title }}" class="si-{{ l.image }}"></a></li>
-          {% endfor %}
-          </ul>
+          <a href="https://github.com/ianunruh"><i class="fa fa-github-alt fa-4x"></i></a>
+          <a href="https://twitter.com/ianunruh"><i class="fa fa-twitter fa-4x"></i></a>
+          <a href="https://facebook.com/ian.unruh"><i class="fa fa-facebook-square fa-4x"></i></a>
+          <a href="https://foursquare.com/ianunruh"><i class="fa fa-foursquare fa-4x"></i></a>
+          <a href="https://linkedin.com/in/ianunruh"><i class="fa fa-linkedin-square fa-4x"></i></a>
 
-          <p>Researcher, software engineer, cryptocurrency enthusiast, libertarian</p>
+          <p>
+            Researcher at K-State. Libertarian legalist. Caffeine enthusiast. Aspiring devops engineer.
+          </p>
 
         </div>
 
@@ -51,6 +53,7 @@
         </p>
       </div>
 
+      {% javascript main %}
 
     </div>
 
