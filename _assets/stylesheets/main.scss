@@ -15,6 +15,8 @@ $body-bg: #eaeaea;
 $blockquote-border-color: darken($body-bg, 5%);
 $hr-border: darken($body-bg, 5%);
 
+$table-bg: lighten($body-bg, 10%);
+
 @import "bootstrap";
 // @import "bootstrap/theme";
 
@@ -27,6 +29,12 @@ pre {
 div#main {
   padding-top: 40px;
   padding-bottom: 40px;
+}
+
+.content {
+  img {
+    @extend .img-responsive;
+  }
 }
 
 .blog-sidebar {
