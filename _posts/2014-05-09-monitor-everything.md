@@ -20,9 +20,9 @@ In addition, we'll look at the interfaces for each components:
 - [Grafana](http://grafana.org/)
 - [Sensu dashboard](https://github.com/sensu/sensu-dashboard)
 
-Here's the overall architecture of the completed system:
+The overall architecture is presented below. The circled section is what will be covered in this post.
 
-![Architecture](http://i.imgur.com/lAfzVge.png)
+![Architecture](http://i.imgur.com/aTX3twN.png)
 
 All the included instructions are for Ubuntu Server 14.04, but they probably work on older releases too.
 
@@ -45,6 +45,7 @@ apt-get update
 
 ```sh
 apt-get install -y logstash logstash-contrib
+update-rc.d logstash defaults
 ```
 
 Simple right? Well, until we actually specify some configuration, Logstash will not start. We'll cover that later.
