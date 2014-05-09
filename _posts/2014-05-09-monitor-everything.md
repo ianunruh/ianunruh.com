@@ -20,6 +20,10 @@ In addition, we'll look at the interfaces for each components:
 - [Grafana](http://grafana.org/)
 - [Sensu dashboard](https://github.com/sensu/sensu-dashboard)
 
+Here's the overall architecture of the completed system:
+
+![Architecture](http://i.imgur.com/lAfzVge.png)
+
 All the included instructions are for Ubuntu Server 14.04, but they probably work on older releases too.
 
 ## Pre-installation
