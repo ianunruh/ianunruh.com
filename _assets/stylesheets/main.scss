@@ -9,7 +9,7 @@ $headings-font-family: "Cuprum", sans-serif;
 $font-family-monospace: "Inconsolata", monospace;
 $font-family-sans-serif: "Roboto", monospace;
 
-$brand-primary: #218457;
+$brand-primary: #009999;
 
 $body-bg: #eaeaea;
 $blockquote-border-color: darken($body-bg, 5%);
@@ -34,6 +34,7 @@ div#main {
 .content {
   img {
     @extend .img-responsive;
+    max-height: 500px;
   }
 }
 
