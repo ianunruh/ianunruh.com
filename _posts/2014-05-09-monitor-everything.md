@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Monitoring Everything (Part 1)"
-date: 2015-05-09 01:00:00
+date: 2014-05-09 01:00:00
 comments: true
 ---
 
@@ -76,7 +76,7 @@ If you want to use local log files as an input to Logstash, you may need to give
     getfacl /var/log/syslog
     ```
 
-Using the ACL method is arguably more secure, since the permissions are much more fine-grained.
+Using the ACL method is arguably more secure, since the permissions are much more fine-grained. Note that `acl` may not be installed on your system. Use `apt-get install -y acl` to install it.
 
 <div class="alert alert-warning">
   Don't just blindly set ACL entries on all logs, some processes (like OpenSSH) will complain about it.
@@ -90,6 +90,9 @@ I'm not going to spend too much time on Elasticsearch. The default configuration
 
 ```sh
 apt-get install -y elasticsearch
+update-rc.d elasticsearch defaults
+
+service elasticsearch start
 ```
 
 ### Curator
@@ -142,4 +145,4 @@ Open your browser to `http://localhost/kibana` and you should see the dashboard.
 
 ## Wrap-up
 
-We've plugged in everything, but no data is flowing yet. The next post will start getting into inputs, filters and outputs. Once log entries make it to Elasticsearch, we'll start seeing how helpful Kibana can be.
+We've plugged in everything, but no data is flowing yet. The [next post](/2014/05/monitor-everything-part-2.html) will start getting into inputs, filters and outputs. Once log entries make it to Elasticsearch, we'll start seeing how helpful Kibana can be.
