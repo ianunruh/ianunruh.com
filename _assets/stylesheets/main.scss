@@ -72,3 +72,8 @@ table {
   @extend .table-hover;
   @extend .table-condensed;
 }
+
+// Oxygen Mono is slightly larger than most fonts
+code, pre {
+  font-size: ($font-size-base - 2);
+}
