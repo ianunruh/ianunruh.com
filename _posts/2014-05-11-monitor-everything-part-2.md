@@ -234,6 +234,13 @@ Start up Logstash with `service logstash start`
 
 Over on Kibana, you should start seeing logs flowing. Repeat the steps in this section for any additional nodes.
 
+## Log file templates
+
+I've created and tested several sets of inputs and filters for common applications.
+
+- [Redis](https://gist.github.com/ianunruh/d01028d3ee6de64e09ce)
+- [Sensu](https://gist.github.com/ianunruh/3b2dadefd8df079b7625)
+
 ## Wrap-up
 
 Now the indexer is being shipped logs from other nodes. This configuration will scale pretty decently, we just need to add more Redis instances for failover and load balancing purposes. Currently, logs are shipped to Redis unencrypted. In the next post, I'll cover some improvements we can make to this infrastructure.

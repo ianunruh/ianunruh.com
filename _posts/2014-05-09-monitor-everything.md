@@ -145,4 +145,6 @@ Open your browser to `http://localhost/kibana` and you should see the dashboard.
 
 ## Wrap-up
 
+I've created a [Gist](https://gist.github.com/ianunruh/1aa741d134d1f6210383) containing a script that you can run to install everything described in the post.
+
 We've plugged in everything, but no data is flowing yet. The [next post](/2014/05/monitor-everything-part-2.html) will start getting into inputs, filters and outputs. Once log entries make it to Elasticsearch, we'll start seeing how helpful Kibana can be.
