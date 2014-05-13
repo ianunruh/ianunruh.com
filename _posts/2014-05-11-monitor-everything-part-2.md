@@ -7,6 +7,8 @@ comments: true
 
 In the [previous post](/2014/05/monitor-everything.html), we installed Logstash and friends, but they aren't doing anything at the moment. This post will go over the configuration of the Logstash indexer, as well as shipping logs from other nodes to the indexer.
 
+![Diagram](http://i.imgur.com/8iyv9g1.png)
+
 ## Local Logstash indexing
 
 ### Basic syslog input
