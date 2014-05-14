@@ -243,4 +243,4 @@ I've created and tested several sets of inputs and filters for common applicatio
 
 ## Wrap-up
 
-Now the indexer is being shipped logs from other nodes. This configuration will scale pretty decently, we just need to add more Redis instances for failover and load balancing purposes. Currently, logs are shipped to Redis unencrypted. In the next post, I'll cover some improvements we can make to this infrastructure.
+Now the indexer is being shipped logs from other nodes. This configuration will scale pretty decently, we just need to add more Redis instances for failover and load balancing purposes. Currently, logs are shipped to Redis unencrypted. In the [next post](/2014/05/monitor-everything-part-3.html), I'll cover some improvements we can make to this infrastructure.
