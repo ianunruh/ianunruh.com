@@ -103,7 +103,9 @@ Kibana does not come with authentication out of the box. I'm sure you're startin
 
 ## Slimming down
 
-As I alluded to in the last post, Logstash itself can be too large to run on your micro cloud instances. If we still want logs from these servers, however, we need a shipper with a smaller memory footprint. This is where [logstash-forwarder](https://github.com/elasticsearch/logstash-forwarder) comes in.
+As I alluded to in the last post, Logstash itself can be too large to run on your micro cloud instances. If we still want logs from these servers, however, we need a shipper with a smaller memory footprint. This is where [logstash-forwarder](https://github.com/elasticsearch/logstash-forwarder) comes in. `logstash-forwarder` is written in Go and provides encryption and compression out of the box.
+
+![Architecture with logstash forwarder](/images/forwarder.png)
 
 ### Preparing the indexer
 
@@ -130,6 +132,12 @@ chmod 640 /etc/logstash/forwarder.key
 
 service logstash restart
 ```
+
+<div class="alert alert-warning">
+  <h4>Warning</h4>
+
+  It's probably not a good idea to use the certificates in this manner for production environments. If an attacker can get the certificate from any shipper, they can impersonate the indexer. You should generate a separate certificate/key pair for the indexer.
+</div>
 
 ### Installation
 
