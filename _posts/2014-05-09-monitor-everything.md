@@ -26,6 +26,8 @@ By the second part of this series, I'll configure all of the components in the f
 
 All the included instructions are for Ubuntu Server 14.04, but they probably work on older releases too.
 
+<hr>
+
 ## Pre-installation
 
 We'll go ahead and setup repositories before we do anything else
@@ -38,6 +40,8 @@ echo "deb http://packages.elasticsearch.org/elasticsearch/1.0/debian stable main
 
 apt-get update
 ```
+
+<hr>
 
 ## Logstash
 
@@ -82,6 +86,8 @@ Using the ACL method is arguably more secure, since the permissions are much mor
   Don't just blindly set ACL entries on all logs, some processes (like OpenSSH) will complain about it.
 </div>
 
+<hr>
+
 ## Elasticsearch
 
 ### Installation
@@ -121,6 +127,8 @@ cd /usr/share/elasticsearch && bin/plugin -install mobz/elasticsearch-head
 
 Now just open `http://localhost:9200/_plugin/head` in your browser and play around. You can use this if you get too much garbage in Elasticsearch while trying out Logstash.
 
+<hr>
+
 ## Kibana
 
 ### Installation
@@ -142,6 +150,8 @@ service apache2 reload
 ```
 
 Open your browser to `http://localhost/kibana` and you should see the dashboard.
+
+<hr>
 
 ## Wrap-up
 

@@ -128,6 +128,8 @@ To check if the configuration is valid without starting Logstash, run the follow
 sudo -u logstash /opt/logstash/bin/logstash agent -f /etc/logstash/conf.d --configtest
 ```
 
+<hr>
+
 ## Shipping to Logstash
 
 Obviously, Logstash isn't terribly useful if you're only using it on a single node. To start shipping logs from your other nodes, there are a wide range of agents you can use. Just off the top of my head, you can use:
@@ -234,12 +236,13 @@ Start up Logstash with `service logstash start`
 
 Over on Kibana, you should start seeing logs flowing. Repeat the steps in this section for any additional nodes.
 
+<hr>
+
 ## Log file templates
 
-I've created and tested several sets of inputs and filters for common applications.
+I've created and tested several sets of inputs and filters for common applications. These are available in my [monitoring](https://github.com/ianunruh/monitoring/tree/master/etc/logstash/conf.d) repository on GitHub.
 
-- [Redis](https://gist.github.com/ianunruh/d01028d3ee6de64e09ce)
-- [Sensu](https://gist.github.com/ianunruh/3b2dadefd8df079b7625)
+<hr>
 
 ## Wrap-up
 
