@@ -20,7 +20,7 @@ The first configuration we'll apply to Logstash is a local syslog file input. It
 
 First, give Logstash permission to read these files:
 
-```sh
+```bash
 setfacl -m u:logstash:r /var/log/{syslog,auth.log}
 ```
 
@@ -76,7 +76,7 @@ output {
 
 To test it all out, run the following:
 
-```sh
+```bash
 sudo -u logstash /opt/logstash/bin/logstash agent -f /etc/logstash/conf.d
 ```
 
@@ -107,7 +107,7 @@ output {
 
 Optionally, you can remove `90-output-stdout.conf` so that the logs for Logstash itself won't be filled with garbage. Now that we have a working configuration, it's possible to start the Logstash service.
 
-```sh
+```bash
 service logstash restart
 ```
 
@@ -124,11 +124,11 @@ If permission is denied to log files, refer to the previous post for instruction
 
 To check if the configuration is valid without starting Logstash, run the following:
 
-```sh
+```bash
 sudo -u logstash /opt/logstash/bin/logstash agent -f /etc/logstash/conf.d --configtest
 ```
 
-<hr>
+***
 
 ## Shipping to Logstash
 
@@ -145,7 +145,7 @@ Logstash runs on the JVM, causing its memory footprint to be 100MB at minimum. F
 
 We'll just use the version of Redis supplied with the package manager.
 
-```sh
+```bash
 apt-get install -y redis-server
 ```
 
@@ -189,7 +189,7 @@ Now restart Logstash with `service logstash restart`.
 
 On the node you want to ship from, install Logstash.
 
-```sh
+```bash
 curl -s http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -
 
 echo "deb http://packages.elasticsearch.org/logstash/1.4/debian stable main" > /etc/apt/sources.list.d/logstash.list
@@ -201,7 +201,7 @@ update-rc.d logstash defaults
 
 We're going to read the same files we do on the indexer, but we're going to ship them to the indexer. Again, give Logstash permission to read these logs.
 
-```sh
+```bash
 apt-get install -y acl
 setfacl -m u:logstash:r /var/log/{syslog,auth.log}
 ```
@@ -236,13 +236,13 @@ Start up Logstash with `service logstash start`
 
 Over on Kibana, you should start seeing logs flowing. Repeat the steps in this section for any additional nodes.
 
-<hr>
+***
 
 ## Log file templates
 
 I've created and tested several sets of inputs and filters for common applications. These are available in my [monitoring](https://github.com/ianunruh/monitoring/tree/master/etc/logstash/conf.d) repository on GitHub.
 
-<hr>
+***
 
 ## Wrap-up
 

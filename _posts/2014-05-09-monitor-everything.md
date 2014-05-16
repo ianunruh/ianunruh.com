@@ -26,13 +26,13 @@ By the second part of this series, I'll configure all of the components in the f
 
 All the included instructions are for Ubuntu Server 14.04, but they probably work on older releases too.
 
-<hr>
+***
 
 ## Pre-installation
 
 We'll go ahead and setup repositories before we do anything else
 
-```sh
+```bash
 curl -s http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -
 
 echo "deb http://packages.elasticsearch.org/logstash/1.4/debian stable main" > /etc/apt/sources.list.d/logstash.list
@@ -41,13 +41,13 @@ echo "deb http://packages.elasticsearch.org/elasticsearch/1.0/debian stable main
 apt-get update
 ```
 
-<hr>
+***
 
 ## Logstash
 
 ### Installation
 
-```sh
+```bash
 apt-get install -y logstash logstash-contrib
 update-rc.d logstash defaults
 ```
@@ -60,13 +60,13 @@ If you want to use local log files as an input to Logstash, you may need to give
 
 1. Add the `logstash` user to the same group as `syslog`
 
-    ```sh
+    ```bash
     usermod -a -G adm logstash
     ```
 
 2. Set an ACL entry on the relevant logs, like so:
 
-    ```sh
+    ```bash
     # Single log
     setfacl -m u:logstash:r /var/log/redis/redis-server.log
 
@@ -86,7 +86,7 @@ Using the ACL method is arguably more secure, since the permissions are much mor
   Don't just blindly set ACL entries on all logs, some processes (like OpenSSH) will complain about it.
 </div>
 
-<hr>
+***
 
 ## Elasticsearch
 
@@ -94,7 +94,7 @@ Using the ACL method is arguably more secure, since the permissions are much mor
 
 I'm not going to spend too much time on Elasticsearch. The default configuration provided with Elasticsearch is reasonable enough for smaller environments.
 
-```sh
+```bash
 apt-get install -y elasticsearch
 update-rc.d elasticsearch defaults
 
@@ -105,14 +105,14 @@ service elasticsearch start
 
 At some point, you'll need to start pruning old logs from Elasticsearch. They've created a simple tool called [Curator](https://github.com/elasticsearch/curator) that you can install and run as a cron job or manually.
 
-```sh
+```bash
 apt-get install -y python-pip
 pip install elasticsearch-curator
 ```
 
 Now you can run stuff like
 
-```sh
+```bash
 curator -d 30 -T days
 curator -d 12 -T hours
 ```
@@ -121,13 +121,13 @@ curator -d 12 -T hours
 
 For more manual maintenance of Elasticsearch, there is a third-party plugin that makes it super easy called [elasticsearch-head](https://github.com/mobz/elasticsearch-head).
 
-```sh
+```bash
 cd /usr/share/elasticsearch && bin/plugin -install mobz/elasticsearch-head
 ```
 
 Now just open `http://localhost:9200/_plugin/head` in your browser and play around. You can use this if you get too much garbage in Elasticsearch while trying out Logstash.
 
-<hr>
+***
 
 ## Kibana
 
@@ -135,7 +135,7 @@ Now just open `http://localhost:9200/_plugin/head` in your browser and play arou
 
 The Logstash distribution we used also includes Kibana, but it's slightly outdated. Installing Kibana is easy enough that we'll just do it manually.
 
-```sh
+```bash
 curl -O -L https://download.elasticsearch.org/kibana/kibana/kibana-3.0.1.tar.gz
 tar xf kibana-3.0.1.tar.gz
 cp -R kibana-3.0.1 /usr/share/kibana
@@ -143,7 +143,7 @@ cp -R kibana-3.0.1 /usr/share/kibana
 
 Now we'll serve it up with Apache
 
-```sh
+```bash
 apt-get install -y apache2
 echo "alias /kibana /usr/share/kibana" > /etc/apache2/sites-enabled/kibana.conf
 service apache2 reload
@@ -151,7 +151,7 @@ service apache2 reload
 
 Open your browser to `http://localhost/kibana` and you should see the dashboard.
 
-<hr>
+***
 
 ## Wrap-up
 

@@ -80,7 +80,7 @@ If Elasticsearch becomes the bottleneck, [you can easily create a cluster](http:
 
 Depending on how long you want to retain logs, you can easily delete old indexes with tools like [Curator](https://github.com/elasticsearch/curator). After that, you can recycle existing Elasticsearch nodes for newer logs.
 
-<hr>
+***
 
 ## Security
 
@@ -101,7 +101,7 @@ Like Redis, Elasticsearch does not have transport-layer encryption. It also does
 
 Kibana does not come with authentication out of the box. I'm sure you're starting to see a common theme here, but I think it's beneficial that these applications are kept as simple as possible. Fortunately, it's possible to proxy traffic to Kibana through something like nginx or Rack, providing SSL termination and HTTP basic authentication. This can be done [many](http://technosophos.com/2014/03/19/ssl-password-protection-for-kibana.html) [different](https://github.com/elasticsearch/kibana/blob/master/sample/nginx.conf) [ways](https://github.com/christian-marie/kibana3_auth).
 
-<hr>
+***
 
 ## Slimming down
 
@@ -125,7 +125,7 @@ input {
 
 The next step is generating the SSL certificate used for transport encryption.
 
-```sh
+```bash
 openssl req -x509 -batch -nodes -newkey rsa:2048 -keyout forwarder.key -out forwarder.crt
 
 cp forwarder.crt forwarder.key /etc/logstash
@@ -145,7 +145,7 @@ service logstash restart
 
 First, we'll need to secure copy the certificate and key to `/etc/logstash-forwarder` on each node we want to ship logs from. After that, we can install `logstash-forwarder`. I've created a [simple script](https://github.com/ianunruh/monitoring/blob/master/install-logstash-forwarder.sh) that you can run on your nodes to compile and install it.
 
-```sh
+```bash
 apt-get install -y git
 
 git clone git://github.com/ianunruh/monitoring.git
@@ -156,7 +156,7 @@ cd monitoring
 
 You should now start seeing logs shipping to your indexer. Just edit `/etc/logstash-forwarder/config.json` to customize the files you want to ship, as well as the types assigned to them.
 
-<hr>
+***
 
 ## Wrap-up
 
