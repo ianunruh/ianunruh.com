@@ -11,7 +11,7 @@ By the end of the [previous post](/2014/05/monitor-everything-part-2.html), logs
 
 **tl;dr you can horizontally scale out this architecture as much as needed**
 
-![Simple broker architecture](/images/simple-broker.png)
+![Simple broker architecture](/images/mep3/simple-broker.png)
 
 We currently have a system that looks like the above image. This will support a small amount of nodes, but provides no load balancing or high availability. Of course, depending on the importance you place on logs, this may not matter at all.
 
@@ -19,7 +19,7 @@ If retention of logs is important, or you're receiving a high volume of logs, re
 
 ### Scaling out Redis
 
-![Simple broker architecture w/ load balancing](/images/simple-broker-lb.png)
+![Simple broker architecture w/ load balancing](/images/mep3/simple-broker-lb.png)
 
 If we fire up multiple Redis instances on the same node, we get a bit more availability if we need to do Redis upgrades or restarts. There are a plethora of tutorials on the Internet for this. In a few minutes, I put together [an install script](https://gist.github.com/ianunruh/4332ad3d341a34bdb2f9) that handles multiple Redis instances.
 
@@ -56,7 +56,7 @@ output {
 
 If the monitoring server crashes, it takes everything with it. If it's down long enough, the shippers will start discarding their backlog to avoid filling up memory. Obviously we need to split out the Redis instances to separate nodes.
 
-![Simple broker architecture w/ load balancing and HA](/images/simple-broker-ha-lb.png)
+![Simple broker architecture w/ load balancing and HA](/images/mep3/simple-broker-ha-lb.png)
 
 If we split Redis out of the monitoring node onto a couple other nodes, we get load balancing and high availability. If you have nodes across multiple datacenters, put a Redis instance in each datacenter. This will provide protection against short-term network partitions.
 
@@ -66,11 +66,11 @@ This will perform well until the bottleneck becomes the indexer itself.
 
 ### Scaling out the indexer
 
-![Multiple indexers w/ load balancing](/images/lb-indexer.png)
+![Multiple indexers w/ load balancing](/images/mep3/lb-indexer.png)
 
 When you get to the point where a single indexer can't keep up with the incoming logs, just split out Elasticsearch onto its own node and fire up more indexers.
 
-![Multiple indexers w/ load balancing and HA](/images/ha-lb-indexer.png)
+![Multiple indexers w/ load balancing and HA](/images/mep3/ha-lb-indexer.png)
 
 Finally, you can create a full mesh between all nodes. If you enable `shuffle_hosts` on the Redis output on your shippers, Logstash should provide some even distribution between the Redis nodes. The Logstash indexers will take turns consuming the queues from both Redis hosts. You can even mesh on the producer side and partition on the consumer side (or vice versa). **It's all up to you.**
 
@@ -107,7 +107,7 @@ Kibana does not come with authentication out of the box. I'm sure you're startin
 
 As I alluded to in the last post, Logstash itself can be too large to run on your micro cloud instances. If we still want logs from these servers, however, we need a shipper with a smaller memory footprint. This is where [logstash-forwarder](https://github.com/elasticsearch/logstash-forwarder) comes in. `logstash-forwarder` is written in Go and provides encryption and compression out of the box.
 
-![Architecture with logstash forwarder](/images/forwarder.png)
+![Architecture with logstash forwarder](/images/mep3/forwarder.png)
 
 ### Preparing the indexer
 
