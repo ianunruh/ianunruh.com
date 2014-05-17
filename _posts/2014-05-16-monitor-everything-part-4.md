@@ -127,7 +127,7 @@ Restart the Sensu server with `service sensu-server restart`.
 
 ### Collecting metrics
 
-We'll need to put a metric and client in the same subscription. I've chosen `production` here, but use whatever make sense for your environment. Configure your client with the following stanza.
+We'll need to put a metric and client in the same subscription. I've chosen `production` here, but use whatever make sense for your environment. Configure your client with the following stanza in `/etc/sensu/conf.d/client.json`.
 
 ```json
 {
