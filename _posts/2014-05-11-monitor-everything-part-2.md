@@ -101,6 +101,8 @@ Once you know your filters work as expected, remove our debugging options from `
 output {
   elasticsearch {
     host => "localhost"
+    # Uncomment the following line if you're working with Elasticsearch 0.90.x
+    # protocol => http
   }
 }
 ```
