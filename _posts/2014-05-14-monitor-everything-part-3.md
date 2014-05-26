@@ -15,17 +15,17 @@ By the end of the [previous post](/2014/05/monitor-everything-part-2.html), logs
 
 **tl;dr you can horizontally scale out this architecture as much as needed**
 
+We currently have a system that looks like the following image.
+
 ![Simple broker architecture](/images/mep3/simple-broker.png)
 
-We currently have a system that looks like the above image. This will support a small amount of nodes, but provides no load balancing or high availability. Of course, depending on the importance you place on logs, this may not matter at all.
-
-If retention of logs is important, or you're receiving a high volume of logs, refer to the reference architectures below.
+This will support a small amount of nodes, but provides no load balancing or high availability. Of course, depending on the importance you place on logs, this may not matter at all. If retention of logs is important, or you're receiving a high volume of logs, refer to the reference architectures below.
 
 ### Scaling out Redis
 
-![Simple broker architecture w/ load balancing](/images/mep3/simple-broker-lb.png)
+First, start by adding additional Redis instances to the same node. I put together [an install script](https://gist.github.com/ianunruh/4332ad3d341a34bdb2f9) in a few minutes that handles multiple Redis instances. An added benefit is that you can freely upgrade and restart the instances without having to worry about message loss.
 
-Adding more Redis instances to the same node will provide high availability in the face of Redis upgrades or restarts. There are a plethora of tutorials on the Internet for this. I put together [an install script](https://gist.github.com/ianunruh/4332ad3d341a34bdb2f9) in a few minutes that handles multiple Redis instances.
+![Simple broker architecture w/ load balancing](/images/mep3/simple-broker-lb.png)
 
 On the indexer, add additional inputs for each Redis instance.
 
@@ -58,11 +58,11 @@ output {
 }
 ```
 
-If the monitoring server crashes, it takes everything with it. If it's down long enough, the shippers will start discarding their backlog to avoid filling up memory. Obviously we need to split out the Redis instances to separate nodes.
+If the monitoring server crashes, it takes everything with it. If it's down long enough, the shippers will start discarding their backlog to avoid filling up memory. To solve this, we will need to migrate the Redis instances to their own nodes.
+
+If we split Redis out of the monitoring node onto a couple other nodes, we get load balancing and high availability. If you have nodes across multiple datacenters, put a Redis instance in each datacenter. This provides tolerance in the event of a network partition.
 
 ![Simple broker architecture w/ load balancing and HA](/images/mep3/simple-broker-ha-lb.png)
-
-If we split Redis out of the monitoring node onto a couple other nodes, we get load balancing and high availability. If you have nodes across multiple datacenters, put a Redis instance in each datacenter. This will provide protection against short-term network partitions.
 
 The configuration on Logstash is the same, except for adjusting the hosts you connect to.
 
@@ -70,13 +70,13 @@ This will perform well until the bottleneck becomes the indexer itself.
 
 ### Scaling out the indexer
 
-![Multiple indexers w/ load balancing](/images/mep3/lb-indexer.png)
-
 When you get to the point where a single indexer can't keep up with the incoming logs, just split out Elasticsearch onto its own node and fire up more indexers.
 
-![Multiple indexers w/ load balancing and HA](/images/mep3/ha-lb-indexer.png)
+![Multiple indexers w/ load balancing](/images/mep3/lb-indexer.png)
 
 You can also create a full mesh between all nodes. If you enable `shuffle_hosts` on the Redis output on your shippers, Logstash should provide some even distribution between the Redis nodes. The Logstash indexers will take turns consuming the queues from both Redis hosts. You can even mesh on the producer side and partition on the consumer side (or vice versa). **It's all up to you.**
+
+![Multiple indexers w/ load balancing and HA](/images/mep3/ha-lb-indexer.png)
 
 ### Scaling out Elasticsearch
 
@@ -142,12 +142,12 @@ service logstash restart
 <div class="alert alert-warning">
   <h4>Warning</h4>
 
-  It's probably not a good idea to use the certificates in this manner for production environments. If an attacker can get the certificate from any shipper, they can impersonate the indexer. You should generate a separate certificate/key pair for the indexer.
+  It's probably not a good idea to use the certificates in this manner for production environments. If an attacker can get the certificate from any shipper, they can impersonate the indexer. This can be an issue when shipping logs containing sensitive information. You should generate a separate certificate for the indexer.
 </div>
 
 ### Installation
 
-First we'll need to secure copy the certificate and key to `/etc/logstash-forwarder` on each node we want to ship logs from. Now we can install `logstash-forwarder`. I've created a [simple script](https://github.com/ianunruh/monitoring/blob/master/install-logstash-forwarder.sh) that you can run on your nodes to compile and install it.
+First we'll need to secure copy the certificate and key to `/etc/logstash-forwarder` on each node we want to ship logs from. After that, you can start installing the forwarder on each node. I've created a [simple script](https://github.com/ianunruh/monitoring/blob/master/install-logstash-forwarder.sh) that will compile and install it.
 
 ```bash
 apt-get install -y git
@@ -158,10 +158,10 @@ cd monitoring
 ./install-logstash-forwarder.sh
 ```
 
-You should now start seeing logs shipping to your indexer. Just edit `/etc/logstash-forwarder/config.json` to customize the files you want to ship, as well as the types assigned to them.
+You should now start seeing logs shipping to your indexer. Just modify `/etc/logstash-forwarder/config.json` to customize the files you want to ship, as well as the types assigned to them.
 
 ***
 
 ## Wrap-up
 
-I covered several ways to improve your log aggregation solution in this post, including architectures for scaling it out, ways to increase security between various components, and a lighter way to ship logs to your indexer. I'll start covering service checks and metrics gathering using Sensu and Graphite in the [next post](/2014/05/monitor-everything-part-4.html).
+I covered several ways to improve your log aggregation solution in this post, including architectures for scaling it out, ways to increase security between various components, and a lighter way to ship logs to your indexer. The [next post](/2014/05/monitor-everything-part-4.html) will start covering collection of metrics using Sensu and Graphite.
