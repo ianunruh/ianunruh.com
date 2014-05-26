@@ -139,8 +139,6 @@ Notice that I added the metric type to this check. This is because we want to fe
 
 After restarting the Sensu server, you should be able to see check results flowing into the Flapjack web interface on port 3080. If you want to test out a failure, you can either use the `simulate-failed-check` tool included with Flapjack, or create some havok yourself with `service nginx stop`.
 
-
-
 ## Wrap-up
 
-In this post, I covered ways to improve this monitoring solution. Using Graphite functions, I cleaned up different metrics on Grafana to make it easier to ascertain the state of my applications. I added service checks to Sensu to provide alerting of failures, then fed the check results into Flapjack, an alert notification router.
+In this post, I introduced Sensu service checks and integrating them with Flapjack. There is a lot more configuration that needs to be done to make Flapjack useful, but I won't get to in-depth on that topic. There is already a [wiki](https://github.com/flapjack/flapjack/wiki) containing more instructions. The next post will be about configuring the Etsy Kale stack and Statsd.
