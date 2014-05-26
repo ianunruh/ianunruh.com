@@ -77,3 +77,11 @@ table {
 code, pre {
   font-size: ($font-size-base - 2);
 }
+
+div.panel-series {
+  @extend .panel;
+  @extend .panel-default;
+  @extend .pull-right;
+
+  margin: 0 15px;
+}

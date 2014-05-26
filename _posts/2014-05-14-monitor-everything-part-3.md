@@ -1,11 +1,15 @@
 ---
 layout: post
-title: "Monitoring Everything (Part 3)"
+title: "Logstash Improvements"
 date: 2014-05-14 16:14:00
 comments: true
 ---
 
+{% include monitoring-series.html %}
+
 By the end of the [previous post](/2014/05/monitor-everything-part-2.html), logs were flowing from multiple sources into Logstash. In this post we'll start looking at scaling out and improving the existing architecture.
+
+<div class="clearfix"></div>
 
 ## Scaling out
 

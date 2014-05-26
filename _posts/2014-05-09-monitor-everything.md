@@ -1,9 +1,11 @@
 ---
 layout: post
-title: "Monitoring Everything (Part 1)"
+title: "Logstash and Kibana"
 date: 2014-05-09 01:00:00
 comments: true
 ---
+
+{% include monitoring-series.html %}
 
 Lately I've been taking an extensive look into modern monitoring stacks. This is a collection of notes I've taken about installing components as well as getting useful data out of them.
 

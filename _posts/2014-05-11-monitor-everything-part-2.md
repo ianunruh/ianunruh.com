@@ -1,11 +1,15 @@
 ---
 layout: post
-title: "Monitoring Everything (Part 2)"
+title: "Shipping and Indexing with Logstash"
 date: 2014-05-11 02:00:00
 comments: true
 ---
 
+{% include monitoring-series.html %}
+
 In the [previous post](/2014/05/monitor-everything.html), we installed Logstash and friends, but they aren't doing anything at the moment. This post will go over the configuration of the Logstash indexer as well as shipping logs from other nodes to the indexer.
+
+<div class="clearfix"></div>
 
 ![Diagram](http://i.imgur.com/8iyv9g1.png)
 

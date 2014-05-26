@@ -1,13 +1,17 @@
 ---
 layout: post
-title: "Monitoring Everything (Part 4)"
+title: "Sensu, Graphite and Grafana"
 date: 2014-05-16 23:29:00
 comments: true
 ---
 
+{% include monitoring-series.html %}
+
 In the first three posts of this series, I covered the architecture and configuration of Logstash. Combining Logstash, Elasticsearch and Kibana gives you a centralized view of your infrastructure's logs. However, to gain insight into performance of various components, we need to go a step further. This part of the series will deal with collecting and visualizing various metrics from your infrastructure, using Sensu and Graphite.
 
 Below is the architecture we'll end up with after installing and wiring up everything in this post. You can merge any sort of log aggregration architecture discussed in the [previous post](/2014/05/monitor-everything-part-3.html) with it.
+
+<div class="clearfix"></div>
 
 ![Overall architecture](/images/mep4/overall.png)
 
@@ -132,9 +136,9 @@ We'll need to put a metric and client in the same subscription. I've chosen `pro
 ```json
 {
   "client": {
-    "name": "portland",
-    "address": "192.168.44.11",
-    "subscriptions": ["production"]
+    "name": "app1",
+    "address": "192.168.12.11",
+    "subscriptions": ["all"]
   }
 }
 ```
@@ -147,9 +151,9 @@ Then on the server, create `/etc/sensu/conf.d/metrics.json` with the following.
     "load_metrics": {
       "type": "metric",
       "command": "load-metrics.rb",
-      "subscribers": ["production"],
-      "handlers": ["relay"],
-      "interval": 10
+      "interval": 10,
+      "subscribers": ["all"],
+      "handlers": ["relay"]
     }
   }
 }
@@ -168,14 +172,12 @@ In particular, the `load-metrics.rb` plugin requires us to do the following on t
 
 ```bash
 apt-get install -y ruby ruby-dev build-essential
-gem install sensu sensu-plugin --no-ri --no-rdoc
+gem install sensu-plugin --no-ri --no-rdoc
 ```
 
 Other plugins may require additional gems, such as the Redis and PostgreSQL metrics. They will need the `redis` and `pg` gems, respectively.
 
-Now that we have the metric configured, restart the server and client. After I started receiving metrics, I went to Grafana and was able to configure a few panels. I could also see the checks flowing by on the Sensu logs.
-
-![Grafana with some panels](/images/mep4/grafana.png)
+Now that we have the metric configured, restart the server and client. Go to the Graphite dashboard or Grafana and check for the new metrics.
 
 ### Common issues
 
@@ -189,6 +191,40 @@ If you don't see metrics flowing, go through this checklist.
 
 ***
 
+## Grafana
+
+Now that you have some metrics flowing, you can start populating Grafana with useful graphs. As I started configuring graphs, I noticed that I had to do some extra work to get graphs that are both clean and functional.
+
+![Grafana with some metrics](/images/mep4/grafana1.png)
+
+In this case, I wanted to measure the current NIC utilization. However, that metric exists in the form of tx/rx byte counters that grow from zero after the box starts. Therefore, we have to introduce some derivation that will measure the *change* in bytes rather than the byte counter itself. This can be done by first using the Graphite `derivative()` function, followed by `summarize()`. The first argument to `summerize()` can be adjusted depending on the resolution of your data.
+
+This is useful for a wide range of metrics.
+
+- Network interface tx/rx counters
+- RabbitMQ message delivery counters
+- Redis commands processed counter
+
+![Derived metric](/images/mep4/grafana2.png)
+
+For some metrics, visualizing the raw data can result in a graph that has a lot of flapping. This makes it difficult to gauge the metric at a glance.
+
+![Flapping](/images/mep4/grafana3.png)
+
+However, we can apply the `movingAverage()` function to the metric to level it out.
+
+![Moving average applied](/images/mep4/grafana4.png)
+
+This can be useful for a number of metrics.
+
+- Elasticsearch heap usage (drops every GC run interval)
+- Memory usage for any other applications with garbage collection
+- Redis changes since last save (drops every persistence interval)
+
+Summarization and moving averages can be applied together to produce clean graphs that can be used for quick observations of cluster health. There are [tons of other Graphite functions](http://graphite.readthedocs.org/en/latest/functions.html) that can be also applied to clean up your metrics.
+
+***
+
 ## Wrap-up
 
-In this post, we installed Graphite, Grafana and Sensu. We also started collecting and storing metrics from multiple nodes. Historical metric data will be retained according to the Carbon retention policy. At this point you can start adding more metrics and sprucing up your dashboards on Grafana. In the next post I'll cover some Grafana tricks and starting with Sensu service checks.
+In this post, we installed Graphite, Grafana and Sensu. We also started collecting and storing metrics from multiple nodes. Historical metric data will be retained according to the Carbon retention policy. By using just a few of the many Graphite functions, we were able to make our graphs not only beautiful, but functional too. In the [next post](/2014/05/monitor-everything-part-5.html) I'll cover Sensu service checks and integrating them with Flapjack.

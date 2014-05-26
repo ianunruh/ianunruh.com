@@ -1,53 +1,25 @@
 ---
 layout: post
-title: "Monitoring Everything (Part 5)"
+title: "Sensu and Flapjack"
 date: 2014-05-25 19:01:00
 comments: true
 ---
 
-In the [previous post](/2014/05/monitor-everything-part-4.html), I started on collection and visualization of metrics using Sensu, Graphite, and Grafana. In this post, I'll cover some tricks to getting useful data from Grafana, as well as Sensu service checks and [Flapjack](http://flapjack.io/), an alert notification router.
+{% include monitoring-series.html %}
 
-## Grafana
+In the [previous post](/2014/05/monitor-everything-part-4.html), I started on collection and visualization of metrics using Sensu, Graphite, and Grafana. In this post, I'll cover Sensu service checks and integrating Sensu with [Flapjack](http://flapjack.io/), an alert notification router.
 
-Building on the environment created in the previous blog post, there now should be enough data to start creating some panels in Grafana. I'll cover a few simple tips you can use to address some issues with visualizing data.
-
-![Grafana with some metrics](/images/mep5/grafana1.png)
-
-In this case, I wanted to measure the current NIC utilization. However, that metric exists in the form of tx/rx byte counters that grow from zero after the box starts. Therefore, we have to introduce some derivation that will measure the *change* in bytes rather than the byte counter itself. This can be done by first using the Graphite `derivative()` function, followed by `summarize()`. The first argument to `summerize()` can be adjusted depending on the resolution of your data.
-
-This is useful for a wide range of metrics.
-
-- Network interface tx/rx counters
-- RabbitMQ message delivery counters
-- Redis commands processed counter
-
-![Derived metric](/images/mep5/grafana2.png)
-
-For some metrics, visualizing the raw data can result in a graph that has a lot of flapping. This makes it difficult to gauge the metric at a glance.
-
-![Flapping](/images/mep5/grafana3.png)
-
-However, we can apply the `movingAverage()` function to the metric to level it out.
-
-![Moving average applied](/images/mep5/grafana4.png)
-
-This can be useful for a number of metrics.
-
-- Elasticsearch heap usage (drops every GC run interval)
-- Memory usage for any other applications with garbage collection
-- Redis changes since last save (drops every persistence interval)
-
-Summarization and moving averages can be applied together to produce clean graphs that can be used for quick observations of cluster health. There are [tons of other Graphite functions](http://graphite.readthedocs.org/en/latest/functions.html) that can be also applied to clean up your metrics.
+<div class="clearfix"></div>
 
 ## Sensu service checks
 
-In the last post, I covered using Sensu to collect metrics. Now I'll cover how to use Sensu in a Nagios-like fashion with service checks. As an example, we'll monitor a web server with the Sensu client. First, install Nginx to act as a dummy web server.
+In the last post, I covered using Sensu to collect metrics. Now I'll cover how to use Sensu in a Nagios-like fashion with service checks. On the client node that we setup in the previous post, install Nginx to play as a web server in production.
 
 ```bash
 apt-get install -y nginx
 ```
 
-Then install a Sensu plugin that can be used to check if Nginx is running. Since we're doing that, we might as well gather some metrics from Nginx too!
+Then install a Sensu plugin that can be used to check if Nginx is running. Since we're doing that, we might as well gather some metrics from Nginx too! Isn't Sensu awesome?
 
 ```bash
 gem install sensu-plugin --no-ri --no-rdoc
@@ -101,7 +73,7 @@ Sensu already has [guides on adding handlers](http://sensuapp.org/docs/0.12/addi
 
 ## Flapjack
 
-While researching for this blog series, I came across Flapjack, an alert notification router that works with any check execution engines like Nagios and Sensu. Despite Sensu having built in notification and rollup, using these features can have [various drawbacks](http://fractio.nl/2014/01/03/the-how-and-why-of-flapjack/) that aren't immediately apparent. The latest iteration of Flapjack was built from the ground up to focus on alert routing. The Unix philosophy of doing one thing and doing it well really appeals to me, so I decided to look into this tool more.
+While researching for this blog series, I came across Flapjack, an alert notification router that works with check execution engines like Nagios and Sensu. Despite Sensu having built in notification and rollup, using these features can have [various drawbacks](http://fractio.nl/2014/01/03/the-how-and-why-of-flapjack/) that aren't immediately apparent. The latest iteration of Flapjack was built from the ground up to focus on alert routing. The Unix philosophy of doing one thing and doing it well really appeals to me, so I decided to look into this tool more.
 
 There is an excellent [SpeakerDeck](https://speakerdeck.com/auxesis/finding-signal-in-the-monitoring-noise-with-flapjack) covering the benefits of using Flapjack.
 
@@ -166,6 +138,8 @@ Let's take the Nginx check from earlier and make some adjustments to it.
 Notice that I added the metric type to this check. This is because we want to feed all check results to Flapjack, including successful ones.
 
 After restarting the Sensu server, you should be able to see check results flowing into the Flapjack web interface on port 3080. If you want to test out a failure, you can either use the `simulate-failed-check` tool included with Flapjack, or create some havok yourself with `service nginx stop`.
+
+
 
 ## Wrap-up
 
