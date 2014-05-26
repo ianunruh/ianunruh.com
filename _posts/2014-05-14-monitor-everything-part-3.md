@@ -29,7 +29,7 @@ First, start by adding additional Redis instances to the same node. I put togeth
 
 On the indexer, add additional inputs for each Redis instance.
 
-```
+```ruby
 input {
   redis {
     host => "your-redis-server"
@@ -49,7 +49,7 @@ input {
 
 On the shippers, configure a Redis output with multiple hosts.
 
-```
+```ruby
 output {
   redis {
     host => ["your-redis-server:6379", "your-redis-server:6380"]
@@ -117,7 +117,7 @@ As I alluded to in the last post, Logstash itself can be too large to run on you
 
 It's relatively easy to prepare the indexer to receive logs via Lumberjack, the underlying protocol used by `logstash-forwarder`. Just create `/etc/logstash/conf.d/10-input-lumberjack.conf` with the following.
 
-```
+```ruby
 input {
   lumberjack {
     port => 5043

@@ -30,7 +30,7 @@ setfacl -m u:logstash:r /var/log/{syslog,auth.log}
 
 Then create `/etc/logstash/conf.d/15-input-file.conf` with the contents:
 
-```
+```ruby
 input {
   file {
     type => "syslog"
@@ -70,7 +70,7 @@ Some observations about this configuration file:
 
 Now that we're reading and filtering these logs, the results have to go somewhere. For now we'll just test with stdout. Create `/etc/logstash/conf.d/90-output-stdout.conf` with the contents:
 
-```
+```ruby
 output {
   stdout {
     codec => rubydebug
@@ -86,7 +86,7 @@ sudo -u logstash /opt/logstash/bin/logstash agent -f /etc/logstash/conf.d
 
 Nothing may appear at first due to Logstash streaming from the end of files by default. You can trigger some logs immediately by logging in or out of the monitoring node in another terminal. If you wish to test your filters against historical entries, you can also modify the `input` section of `15-input-file.conf` to be the following:
 
-```
+```ruby
 input {
   file {
     type => "syslog"
@@ -101,7 +101,7 @@ This change will cause Logstash to start at the beginning of all files *every ti
 
 Once you know your filters work as expected, remove our debugging options from `15-input-file.conf`. Then create `/etc/logstash/conf.d/90-output-elasticsearch.conf` with the following contents.
 
-```
+```ruby
 output {
   elasticsearch {
     host => "localhost"
@@ -178,7 +178,7 @@ Restart Redis with `service redis-server restart`.
 
 Create `/etc/logstash/conf.d/10-input-redis.conf` with the following.
 
-```
+```ruby
 input {
   redis {
     host => "localhost"
@@ -214,7 +214,7 @@ setfacl -m u:logstash:r /var/log/{syslog,auth.log}
 
 Create `/etc/logstash/conf.d/shipper.conf` with the following contents.
 
-```
+```ruby
 input {
   file {
     type => "syslog"
