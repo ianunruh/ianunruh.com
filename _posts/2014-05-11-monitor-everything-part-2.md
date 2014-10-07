@@ -11,7 +11,7 @@ In the [previous post](/2014/05/monitor-everything.html), we installed Logstash 
 
 <div class="clearfix"></div>
 
-![Diagram](http://i.imgur.com/8iyv9g1.png)
+![Diagram](https://i.imgur.com/8iyv9g1.png)
 
 ## Local Logstash indexing
 

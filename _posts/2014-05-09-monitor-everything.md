@@ -24,7 +24,7 @@ In addition, we'll look at the interfaces for each components:
 
 By the second part of this series, I'll configure all of the components in the following diagram:
 
-![Diagram](http://i.imgur.com/8iyv9g1.png)
+![Diagram](https://i.imgur.com/8iyv9g1.png)
 
 All the included instructions are for Ubuntu Server 14.04, but they probably work on older releases too.
 
